@@ -3,10 +3,8 @@
 
 package com.varano.chess.game.pieces;
 
+import com.varano.chess.game.Move;
+
 public class Queen extends Piece {
    
-   
-   public boolean moveLegal(Move m) {
-      
-   }
 }

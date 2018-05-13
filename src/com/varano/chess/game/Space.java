@@ -6,7 +6,7 @@ package com.varano.chess.game;
 public class Space {
    private byte row;
    private char col;
-   private boolean isBlack, occupied;
+   private boolean isWhite, occupied;
    
    /**
     * a space in a chessBoard. simply holds a row and column
@@ -15,14 +15,14 @@ public class Space {
     */
    public Space(char col, byte row) {
       this.col = col; this.row = row;
-      isBlack = (getColumn() + row) % 2 == 0;
+      isWhite = (getColumn() + row) % 2 == 0;
    }
    
    public byte getColumn() {
       return (byte) (col - 'a' + 1);
    }
    public String toString() {
-      return col + row + "";
+      return (char)col + "" + row;
    }
    public void setOccupation(boolean occupied) {
       this.occupied = occupied;
@@ -30,8 +30,8 @@ public class Space {
    public boolean isOccupied() {
       return occupied;
    }
-   public boolean isBlack() {
-      return isBlack;
+   public boolean isWhite() {
+      return isWhite;
    }
    public byte getRow() {
       return row;

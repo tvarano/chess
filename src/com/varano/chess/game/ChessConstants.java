@@ -4,5 +4,6 @@
 package com.varano.chess.game;
 
 public class ChessConstants {
-   public static final byte rows = 8, cols = 8;
+   public static final char colOne = 'a', lastCol = 'h';
+   public static final byte rows = 8, cols = lastCol - colOne + 1;
 }

@@ -3,11 +3,12 @@
 
 package com.varano.chess.game.pieces;
 
+import com.varano.chess.game.Move;
 import com.varano.chess.game.Space;
 
 public abstract class Piece {
    private byte id;
-   private boolean isWhite;
+   private boolean white, alive;
    private Space location;
    
    public Piece(byte id, boolean isWhite, Space location) {
