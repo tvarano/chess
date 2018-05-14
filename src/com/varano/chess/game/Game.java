@@ -22,7 +22,7 @@ public class Game {
    }
    
    private Piece[] createPieces() {
-      return new Piece[0];
+      return Piece.createStart(board);
    }
 
    public Piece[] getPieces() {

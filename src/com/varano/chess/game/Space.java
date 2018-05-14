@@ -19,7 +19,7 @@ public class Space {
    }
    
    public byte getColumn() {
-      return (byte) (col - 'a' + 1);
+      return (byte) (col - ChessConstants.colOne + 1);
    }
    public String toString() {
       return (char)col + "" + row;

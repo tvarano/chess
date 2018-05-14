@@ -3,6 +3,10 @@
 
 package com.varano.chess.game.pieces;
 
-public class Rook extends Piece {
+import com.varano.chess.game.Space;
 
+public class Rook extends Piece {
+   public Rook(byte id, boolean white, Space location) {
+      super(id, white, location);
+   }
 }

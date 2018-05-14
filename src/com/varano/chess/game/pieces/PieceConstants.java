@@ -3,6 +3,8 @@
 
 package com.varano.chess.game.pieces;
 
+import com.varano.chess.game.ChessConstants;
+
 public class PieceConstants {
    /*
     * piece ID
@@ -15,5 +17,26 @@ public class PieceConstants {
     * black back is 25-32
     */
    
-   public static final byte amtPawn = 8, amtOnTeam = 16;
+   public static final byte amtPawn = ChessConstants.cols, amtOnTeam = amtPawn * 2;
+   
+   public static byte getRow(int pieceID) {
+      if (pieceID <= amtPawn) return 2;
+      if (pieceID <= amtOnTeam) return 1;
+      pieceID -= amtOnTeam;
+      if (pieceID < amtPawn) return 7;
+      return 8;
+   }
+   
+   public static char getCol(int pieceID) {
+      if (pieceID <= amtOnTeam) {
+         pieceID--;
+         return (char)(ChessConstants.colOne + (pieceID % ChessConstants.cols)); 
+      }
+      pieceID--;
+      return (char)(ChessConstants.lastCol - (pieceID % ChessConstants.cols));
+   }
+   
+   public static void main(String[] args) {
+      System.out.println(getCol(25));
+   }
 }

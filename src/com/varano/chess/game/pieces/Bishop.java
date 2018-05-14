@@ -3,6 +3,11 @@
 
 package com.varano.chess.game.pieces;
 
+import com.varano.chess.game.Space;
+
 public class Bishop extends Piece {
 
+   public Bishop(byte id, boolean white, Space location) {
+      super(id, white, location);
+   }
 }
