@@ -23,7 +23,7 @@ public class PieceConstants {
       if (pieceID <= amtPawn) return 2;
       if (pieceID <= amtOnTeam) return 1;
       pieceID -= amtOnTeam;
-      if (pieceID < amtPawn) return 7;
+      if (pieceID <= amtPawn) return 7;
       return 8;
    }
    

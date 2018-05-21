@@ -14,7 +14,7 @@ public class Move {
    private byte pieceID;
    
    public Move(byte pieceID, Space end) {
-      
+      this.end = end; this.pieceID = pieceID;
    }
 
    public Space getEnd() {
