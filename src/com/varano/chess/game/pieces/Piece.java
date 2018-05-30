@@ -5,13 +5,13 @@ package com.varano.chess.game.pieces;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import com.varano.chess.game.Board;
 import com.varano.chess.game.Game;
 import com.varano.chess.game.Move;
 import com.varano.chess.game.Space;
-import com.varano.chess.information.LogHandler;
+import com.varano.chess.information.logging.Logger;
 
 public abstract class Piece {
    private byte id;
@@ -19,10 +19,12 @@ public abstract class Piece {
    protected Space location;
    protected Game parent;
    protected BufferedImage skin;
-   private static final Logger log = LogHandler.getLogger(Piece.class.getName());
+   protected static final Logger log = Logger.getLogger(Piece.class.getName());
    
    public Piece(byte id, boolean isWhite, Space location, Game parent) {
+      log.setThreshold(Level.FINE);
       this.id = id; setWhite(isWhite); setLocation(location); this.parent = parent;
+      alive = true;
       location.setOccupation(true);
    }
    
@@ -35,15 +37,17 @@ public abstract class Piece {
    }
    
    public boolean moveLegal(Move m) {
-      if (!parent.moveLegal(m)) return false;
-      if (isBlocked(m)) return false;
+      log.config("checking "+m);
       if (!(m.getEnd().isDiagonal(location) || m.getEnd().isHorizontal(location) || m.getEnd().isVertical(location)))
          return false;
+      if (isBlocked(m)) return false;
+      log.config("checking 2 "+m);
       return true;
    }
    
    public boolean isBlocked(Move m) {
       ArrayList<Space> path = parent.getBoard().spacesBetween(location, m.getEnd());
+      log.config("path="+path);
       for (int i = 1; i < path.size() - 1; i++)
          if (path.get(i).isOccupied())
             return true;
@@ -75,6 +79,7 @@ public abstract class Piece {
    }
    
    public void die() {
+      log.config("piece "+id + " is dead");
       setAlive(false);
       setLocation(Space.DEAD_SPACE);
    }

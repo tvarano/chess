@@ -7,17 +7,16 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.varano.chess.information.ErrorHandler;
-import com.varano.chess.information.LogHandler;
+import com.varano.chess.information.logging.Logger;
 
 public class ResourceManager {
-   private static final Logger log = LogHandler.getLogger(ResourceManager.class.getName());
+   private static final Logger log = Logger.getLogger(ResourceManager.class.getName());
    private static BufferedImage pieceSheet, emptySpace;
    private static BufferedImage[] pieceSkins;
    public static final int PIECE_H = 60, PIECE_W = PIECE_H;

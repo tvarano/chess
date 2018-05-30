@@ -43,6 +43,9 @@ public class Space {
    public byte getColumn() {
       return (byte) (col - ChessConstants.colOne + 1);
    }
+   public char colChar() {
+      return col;
+   }
    public String toString() {
       return (char)col + "" + row;
    }
@@ -57,5 +60,8 @@ public class Space {
    }
    public byte getRow() {
       return row;
+   }
+   public byte getRowIndex() {
+      return (byte) (ChessConstants.rows - row + 1);
    }
 }

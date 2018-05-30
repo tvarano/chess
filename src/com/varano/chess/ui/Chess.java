@@ -15,7 +15,7 @@ public class Chess {
    public static void main(String[] args) {
       java.awt.EventQueue.invokeLater(new Thread() {
          public void run() {
-            ChessUI.createAndShowGUI();
+            GameUI.createAndShowGUI();
          }
       });
    }

@@ -17,6 +17,7 @@ public class BoardUIWrapper extends JPanel {
    
    public BoardUIWrapper(Board b, Game master) {
       super(new GridLayout(b.rows(), b.cols()));
+      master.setBoardUI(this);
       this.b = b;
       spaces = new SpaceUIWrapper[b.rows()][b.cols()];
       for (int i = 0; i < spaces.length; i++)
@@ -25,6 +26,13 @@ public class BoardUIWrapper extends JPanel {
          }
       addComponents();
       requestFocus();
+   }
+   
+   public void updateGameUI() {
+      for (SpaceUIWrapper[] ss : spaces) 
+         for (SpaceUIWrapper s : ss) {
+            s.updateImage();
+      }
    }
    
    private void addComponents() {

@@ -24,4 +24,8 @@ public class Move {
    public byte getPieceID() {
       return pieceID;
    }
+   
+   public String toString() {
+      return pieceID + " to " + end.toString();
+   }
 }

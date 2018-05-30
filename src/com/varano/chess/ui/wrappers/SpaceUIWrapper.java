@@ -5,23 +5,20 @@ package com.varano.chess.ui.wrappers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import com.varano.chess.game.Game;
 import com.varano.chess.game.Space;
-import com.varano.chess.information.LogHandler;
+import com.varano.chess.information.logging.Logger;
 import com.varano.chess.resources.ResourceManager;
 import com.varano.chess.ui.UIHandler;
 
 public class SpaceUIWrapper extends JButton implements ActionListener {
    private Space s;
    private Game master;
-   private static final Logger log = LogHandler.getLogger(SpaceUIWrapper.class.getName());
-
-   //TODO make all pictures square.... have an empty picture of the same dimensions and then 
+   private static final Logger log = Logger.getLogger(SpaceUIWrapper.class.getName());
    
    public SpaceUIWrapper(Space s, Game master) {
       super(s.toString());
@@ -63,6 +60,13 @@ public class SpaceUIWrapper extends JButton implements ActionListener {
 
    @Override
    public void actionPerformed(ActionEvent arg0) {
-      System.out.println("clicked "+s);
+      log.finer("clicked " + s);
+      if (s.isOccupied() && master.pieceAt(s).isWhite() == master.getCurrentPlayer().isWhite()) {
+         master.getCurrentPlayer().setSelectedPiece(master.pieceAt(s));
+      } else if (master.getCurrentPlayer().getSelectedPiece() != null) {
+         master.getCurrentPlayer().setEndSpace(s);
+         master.getCurrentPlayer().submitMove();
+         updateImage();
+      }
    }
 }
