@@ -26,6 +26,10 @@ public class Player {
       return Math.abs(start.getRow() - startRow) < Math.abs(end.getRow() - startRow);
    }
    
+   public String getName() {
+      return white ? "White" : "Black";
+   }
+   
    public void submitMove() {
       parentGame.submitMove(new Move(selectedPiece.getId(), endSpace));
       selectedPiece = null;

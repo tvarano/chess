@@ -21,18 +21,15 @@ public class Pawn extends Piece {
    public boolean moveLegal(Move m) {
       if (!super.moveLegal(m)) return false;
       if (m.getEnd().isHorizontal(location)) return false;
-      System.out.println("CHECK ONE");
       if (parent.getCurrentPlayer().isForwards(location, m.getEnd())) {
          int distanceAvailable = (location.equals(start)) ? 2 : 1;
          if (m.getEnd().isVertical(location) && 
                m.getEnd().distanceTo(location) <= distanceAvailable && !m.getEnd().isOccupied())
             return true;
-         System.out.println("CHECK TWO");
       if (m.getEnd().isDiagonal(location) && m.getEnd().isOccupied()
-            && parent.pieceAt(m.getEnd()).isWhite() != isWhite() && m.getEnd().distanceTo(location) == 1)
+            && parent.pieceAt(m.getEnd()).isWhite() != isWhite() && m.getEnd().distanceTo(location) == Math.sqrt(2))
          return true;
       }
-      System.out.println("CHECK THREE");
       return false;
    }
 }

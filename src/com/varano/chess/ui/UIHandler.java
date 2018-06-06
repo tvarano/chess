@@ -6,12 +6,13 @@ package com.varano.chess.ui;
 import java.awt.Color;
 
 public class UIHandler {
-   public static Color lightTeam, darkTeam;
+   public static Color lightTeam, darkTeam, highlight;
 
    public static void setColors() {
       lightTeam = Color.WHITE;
 //      darkTeam = new Color(210, 140, 40);
       darkTeam = Color.DARK_GRAY;
+      highlight = Color.YELLOW.brighter();
    }
    
    public static void setUI() {

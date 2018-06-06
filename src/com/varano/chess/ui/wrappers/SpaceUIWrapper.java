@@ -18,17 +18,19 @@ import com.varano.chess.ui.UIHandler;
 public class SpaceUIWrapper extends JButton implements ActionListener {
    private Space s;
    private Game master;
+   private BoardUIWrapper parentBoard;
    private static final Logger log = Logger.getLogger(SpaceUIWrapper.class.getName());
    
-   public SpaceUIWrapper(Space s, Game master) {
+   public SpaceUIWrapper(Space s, Game master, BoardUIWrapper parentBoard) {
       super(s.toString());
       setSpace(s);
       this.master = master;
+      this.parentBoard = parentBoard;
       setUI();
       addActionListener(this);
    }
 
-   private void setUI() {
+   public void setUI() {
       setBackground((s.isWhite() ? UIHandler.lightTeam : UIHandler.darkTeam));
       setBorderPainted(false);
       setOpaque(true);
@@ -61,12 +63,15 @@ public class SpaceUIWrapper extends JButton implements ActionListener {
    @Override
    public void actionPerformed(ActionEvent arg0) {
       log.finer("clicked " + s);
+      if (master.isGameOver()) return;
       if (s.isOccupied() && master.pieceAt(s).isWhite() == master.getCurrentPlayer().isWhite()) {
+         parentBoard.updateGameUI();
          master.getCurrentPlayer().setSelectedPiece(master.pieceAt(s));
+         setBackground(UIHandler.highlight);
       } else if (master.getCurrentPlayer().getSelectedPiece() != null) {
          master.getCurrentPlayer().setEndSpace(s);
          master.getCurrentPlayer().submitMove();
-         updateImage();
+         setUI();
       }
    }
 }

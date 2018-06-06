@@ -10,7 +10,7 @@ package com.varano.chess.ui;
  */
 public class Chess {
    public static final String APP_NAME = "Chess";
-   public static final String BUILD = "0.1";
+   public static final String BUILD = "0.2";
    
    public static void main(String[] args) {
       java.awt.EventQueue.invokeLater(new Thread() {

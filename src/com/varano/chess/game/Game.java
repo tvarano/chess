@@ -5,6 +5,7 @@ package com.varano.chess.game;
 
 import com.varano.chess.game.pieces.Piece;
 import com.varano.chess.information.logging.Logger;
+import com.varano.chess.ui.GameUI;
 import com.varano.chess.ui.wrappers.BoardUIWrapper;
 
 public class Game {
@@ -16,10 +17,18 @@ public class Game {
    private boolean whitePlaying;
    private Board board;
    private BoardUIWrapper boardUI;
+   private GameUI gameUI;
+   private boolean gameOver;
    private static final Logger log = Logger.getLogger("standard");
    
-   public Game() {
+   public Game(GameUI parent) {
+      gameUI = parent;
       init();
+   }
+   
+   public void restart() {
+      init();
+      if (boardUI != null) boardUI.updateGameUI();
    }
    
    private void init() {
@@ -36,11 +45,22 @@ public class Game {
       putMove(m);
    }
    
+   public boolean isGameOver() {
+      return gameOver;
+   }
+   
+   public void notifyEnd(boolean winnerWhite) {
+      gameOver = true;
+      gameUI.showEnd(winnerWhite);
+   }
+   
    public void putMove(Move m) {
       log.info("move submitted... "+m);
       board.put(pieces[m.getPieceID() - 1], m.getEnd());
       if (boardUI != null) boardUI.updateGameUI(); 
+      if (gameOver) return;
       whitePlaying = !whitePlaying;
+      gameUI.updatePlayer();
    }
    
    public boolean moveLegal(Move m) {
@@ -87,10 +107,6 @@ public class Game {
       this.boardUI = ui;
    }
    
-   /**
-    * TODO will not work in future... temp fix
-    * @return
-    */
    public Player getCurrentPlayer() {
       if (players[0].isWhite() == whitePlaying)
          return players[0];

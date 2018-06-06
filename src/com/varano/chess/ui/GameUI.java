@@ -3,10 +3,16 @@
 
 package com.varano.chess.ui;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.varano.chess.game.Game;
@@ -15,10 +21,41 @@ import com.varano.chess.ui.wrappers.BoardUIWrapper;
 
 public class GameUI extends JPanel {
    private Game game;
+   private JLabel player;
+   private JPanel north;
+   
+   public JLabel playerLabel() {
+      return player;
+   }
+   
+   private static final String prefix = "Now Playing: ";
+   
+   public void updatePlayer() {
+      player.setText(prefix + game.getCurrentPlayer().getName());
+   }
    
    public GameUI() {
-      game = new Game();
-      add(new BoardUIWrapper(game.getBoard(), game));
+      super(new BorderLayout());
+      game = new Game(this);
+      add(new BoardUIWrapper(game.getBoard(), game), BorderLayout.CENTER);
+      player = new JLabel("Now Playing: White");
+      north = new JPanel(new FlowLayout(FlowLayout.LEFT));
+      north.add(player);
+      add(north, BorderLayout.NORTH);
+   }
+   
+   public void showEnd(boolean winnerWhite) {
+      String text = winnerWhite ? "WINNER : WHITE" : "WINNER : BLACK";
+      player.setText(text);
+      player.setFont(player.getFont().deriveFont(30f));
+      JButton restart = new JButton("Restart");
+      restart.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            restart.getParent().remove(1);
+            game.restart();
+         }
+      });
+      north.add(restart);
    }
    
    public Dimension getPreferredSize() {

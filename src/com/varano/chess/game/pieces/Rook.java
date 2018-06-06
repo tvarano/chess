@@ -15,10 +15,7 @@ public class Rook extends Piece {
    }
    
    public boolean moveLegal(Move m) {
-      System.out.println("ROOK");
       if (!super.moveLegal(m)) return false;
-      System.out.println("um");
-      if (m.getEnd().isDiagonal(location)) return false;
-      return true;
+      return (!m.getEnd().isDiagonal(location));
    }
 }
