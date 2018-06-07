@@ -24,22 +24,30 @@ public class Game {
    public Game(GameUI parent) {
       gameUI = parent;
       init();
+      initPieces();
    }
    
    public void restart() {
-      init();
+      for (Piece p : pieces)
+         p.reset();
       if (boardUI != null) boardUI.updateGameUI();
+      gameUI.updatePlayer();
+      gameOver = false;
+      whitePlaying = true;
    }
+
    
    private void init() {
       board = new Board(this);
-      pieces = createPieces();
       players = new Player[2];
       players[0] = new Player(true, this);
       players[1] = new Player(false, this);
       whitePlaying = true;
    }
    
+   private void initPieces() {
+      pieces = createPieces();
+   }
    public void submitMove(Move m) {
       if (!moveLegal(m)) return;
       putMove(m);

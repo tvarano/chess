@@ -9,12 +9,9 @@ import com.varano.chess.game.Space;
 import com.varano.chess.resources.ResourceManager;
 
 public class Pawn extends Piece {
-
-   private Space start;
    
    public Pawn(byte id, boolean white, Space location, Game parent) {
       super(id, white, location, parent);
-      start = location;
       setSkin(ResourceManager.getSkins()[(white) ? ResourceManager.W_PAWN : ResourceManager.B_PAWN]);
    }
    

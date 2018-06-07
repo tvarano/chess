@@ -39,23 +39,22 @@ public class GameUI extends JPanel {
       game = new Game(this);
       add(new BoardUIWrapper(game.getBoard(), game), BorderLayout.CENTER);
       player = new JLabel("Now Playing: White");
+      player.setFont(player.getFont().deriveFont(30f));
       north = new JPanel(new FlowLayout(FlowLayout.LEFT));
       north.add(player);
+      JButton restart = new JButton("Restart");
+      restart.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            game.restart();
+         }
+      });
+      north.add(restart);
       add(north, BorderLayout.NORTH);
    }
    
    public void showEnd(boolean winnerWhite) {
       String text = winnerWhite ? "WINNER : WHITE" : "WINNER : BLACK";
       player.setText(text);
-      player.setFont(player.getFont().deriveFont(30f));
-      JButton restart = new JButton("Restart");
-      restart.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            restart.getParent().remove(1);
-            game.restart();
-         }
-      });
-      north.add(restart);
    }
    
    public Dimension getPreferredSize() {

@@ -16,7 +16,7 @@ import com.varano.chess.information.logging.Logger;
 public abstract class Piece {
    private byte id;
    protected boolean white, alive;
-   protected Space location;
+   protected Space location, start;
    protected Game parent;
    protected BufferedImage skin;
    protected static final Logger log = Logger.getLogger(Piece.class.getName());
@@ -25,6 +25,7 @@ public abstract class Piece {
       log.setThreshold(Level.FINE);
       this.id = id; setWhite(isWhite); setLocation(location); this.parent = parent;
       alive = true;
+      start = location;
       location.setOccupation(true);
    }
    
@@ -54,6 +55,12 @@ public abstract class Piece {
       return false;
    }
    
+   public void reset() {
+      location.setOccupation(false);
+      parent.putMove(new Move(this.getId(), start));
+      setAlive(true);
+   }
+   
    public static Piece[] createStart(Game g) {
       byte id = 1;
       Piece[] ret = new Piece[PieceConstants.amtOnTeam * 2];
@@ -66,14 +73,22 @@ public abstract class Piece {
             log.fine("created " + ret[index]);
             id++;
          }
-         ret[index] = new Rook(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g); index++; id++;
-         ret[index] = new Knight(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g); index++; id++;
-         ret[index] = new Bishop(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g); index++; id++;
-         ret[index] = new King(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g); index++; id++;
-         ret[index] = new Queen(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g); index++; id++;
-         ret[index] = new Bishop(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g); index++; id++;
-         ret[index] = new Knight(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g); index++; id++;
-         ret[index] = new Rook(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g); index++; id++;
+         ret[index] = new Rook(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g);
+         ret[index].setStart(b.get(PieceConstants.getCol(id), PieceConstants.getRow(id))); index++; id++;
+         ret[index] = new Knight(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g);
+         ret[index].setStart(b.get(PieceConstants.getCol(id), PieceConstants.getRow(id))); index++; id++;
+         ret[index] = new Bishop(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g);
+         ret[index].setStart(b.get(PieceConstants.getCol(id), PieceConstants.getRow(id))); index++; id++;
+         ret[index] = new King(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g);
+         ret[index].setStart(b.get(PieceConstants.getCol(id), PieceConstants.getRow(id))); index++; id++;
+         ret[index] = new Queen(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g);
+         ret[index].setStart(b.get(PieceConstants.getCol(id), PieceConstants.getRow(id))); index++; id++;
+         ret[index] = new Bishop(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g); 
+         ret[index].setStart(b.get(PieceConstants.getCol(id), PieceConstants.getRow(id))); index++; id++;
+         ret[index] = new Knight(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g);
+         ret[index].setStart(b.get(PieceConstants.getCol(id), PieceConstants.getRow(id))); index++; id++;
+         ret[index] = new Rook(id, white, b.get(PieceConstants.getCol(id), PieceConstants.getRow(id)), g); 
+         ret[index].setStart(b.get(PieceConstants.getCol(id), PieceConstants.getRow(id))); index++; id++;
       }
       return ret;
    }
@@ -118,6 +133,10 @@ public abstract class Piece {
 
    public void setSkin(BufferedImage skin) {
       this.skin = skin;
+   }
+   
+   public void setStart(Space s) {
+      start = s;
    }
 
    public Game getParent() {

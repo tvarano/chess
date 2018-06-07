@@ -10,7 +10,6 @@ public class UIHandler {
 
    public static void setColors() {
       lightTeam = Color.WHITE;
-//      darkTeam = new Color(210, 140, 40);
       darkTeam = Color.DARK_GRAY;
       highlight = Color.YELLOW.brighter();
    }
